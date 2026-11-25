@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Makes the page scale correctly on phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks</title>
+
+  <!-- Quicksand: a rounded font similar to the sample design. If it can't load, the browser uses a system font. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Relative path + lowercase name so it works on GitHub Pages -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- Top bar: title on the left, dark mode toggle on the right -->
+    <header class="app-bar">
+      <h1>Tasks</h1>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle dark mode" aria-pressed="true" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/>
+        </svg>
+      </button>
+    </header>
+
+    <main class="content">
+
+      <!-- Shown only if localStorage fails (e.g. private browsing) -->
+      <p id="storage-warning" class="warning" role="alert" hidden>
+        Your browser is blocking storage, so tasks won't be saved after you close this page.
+      </p>
+
+      <!-- Add-task form. Pressing Enter in the text box submits it. -->
+      <form id="task-form" class="card" novalidate>
+        <div class="field">
+          <label for="task-input">Task</label>
+          <input id="task-input" type="text" placeholder="e.g. Buy groceries" maxlength="100" autocomplete="off">
+        </div>
+        <p id="form-error" class="error" role="alert" hidden>Please type a task first.</p>
+
+        <div class="row">
+          <div class="field">
+            <label for="due-input">Due date</label>
+            <input id="due-input" type="date">
+          </div>
+          <div class="field select-field">
+            <label for="priority-input">Priority</label>
+            <select id="priority-input">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">ADD TASK</button>
+      </form>
+
+      <!-- Counter, filters and "clear completed" -->
+      <section class="card toolbar" aria-label="Task controls">
+        <div class="toolbar-top">
+          <p id="counter" class="counter" aria-live="polite">0 tasks left</p>
+          <button id="clear-completed" class="btn btn-small" type="button">CLEAR COMPLETED</button>
+        </div>
+        <div class="filters" role="group" aria-label="Filter tasks">
+          <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-btn" type="button" data-filter="active" aria-pressed="false">Active</button>
+          <button class="filter-btn" type="button" data-filter="completed" aria-pressed="false">Completed</button>
+        </div>
+      </section>
+
+      <!-- The task list (JavaScript fills this in) -->
+      <ul id="task-list" class="task-list" aria-label="Task list"></ul>
+
+      <!-- Empty state, like the star screen in the sample design -->
+      <div id="empty-state" class="empty" hidden>
+        <svg viewBox="0 0 24 24" width="96" height="96" aria-hidden="true">
+          <defs>
+            <clipPath id="half-star"><rect x="0" y="0" width="12" height="24"/></clipPath>
+          </defs>
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                fill="currentColor" clip-path="url(#half-star)"/>
+        </svg>
+        <p id="empty-message">You have no tasks</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
